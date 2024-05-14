@@ -43,5 +43,5 @@ Some parts of the code that perform certain operations have been extracted into 
 #### Extract Variable
 Some complex expressions have been replaced by variables with understandable names to make the code easier to understand.
 
-### Rename Method
+#### Rename Method
 The program implements methods with understandable names
