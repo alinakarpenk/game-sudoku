@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Game_Sudoku.Views;
 
 namespace Game_Sudoku
 {
