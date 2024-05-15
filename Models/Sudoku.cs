@@ -14,6 +14,8 @@ namespace Game_Sudoku.Models
         public readonly int _hiddenCount;
         public readonly Random _random;
 
+        public SudokuChecker SudokuChecker { get; set; }
+
         public Sudoku(TextBox[,] textBoxes, int hiddenCount = 45)
         {
             TextBoxes = textBoxes;
@@ -25,6 +27,8 @@ namespace Game_Sudoku.Models
             _generatedMap = new int[9, 9];
 
             GenerateMap();
+            
+            SudokuChecker = new SudokuChecker(_map);
         }
 
         
@@ -183,87 +187,6 @@ namespace Game_Sudoku.Models
 
             _map[x, y] = _generatedMap[x, y];
             TextBoxes[x, y].Text = _map[x, y].ToString();
-        }
-
-        public bool CheckMap()
-        {
-            bool[] appearances = { false, false, false, false, false, false, false, false, false };
-            for (int i = 0; i < 9; i += 1)
-            {
-                for (int j = 0; j < 9; j += 1)
-                {
-                    if (_map[i, j] != 0)
-                    {
-                        if (appearances[_map[i, j] - 1])
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            appearances[_map[i, j] - 1] = true;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                appearances = new[] { false, false, false, false, false, false, false, false, false };
-            }
-
-            for (int i = 0; i < 9; i += 1)
-            {
-                for (int j = 0; j < 9; j += 1)
-                {
-                    if (_map[j, i] != 0)
-                    {
-                        if (appearances[_map[j, i] - 1])
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            appearances[_map[j, i] - 1] = true;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                appearances = new[] { false, false, false, false, false, false, false, false, false };
-            }
-
-            for (int i = 0; i < 3; i += 1)
-            {
-                for (int j = 0; j < 3; j += 1)
-                {
-                    for (int x = 0; x < 3; x += 1)
-                    {
-                        for (int y = 0; y < 3; y += 1)
-                        {
-                            if (_map[i * 3 + x, j * 3 + y] != 0)
-                            {
-                                if (appearances[_map[i * 3 + x, j * 3 + y] - 1])
-                                {
-                                    return false;
-                                }
-                                else
-                                {
-                                    appearances[_map[i * 3 + x, j * 3 + y] - 1] = true;
-                                }
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                    appearances = new[] { false, false, false, false, false, false, false, false, false };
-                }
-            }
-
-            return true;
         }
     }
 }

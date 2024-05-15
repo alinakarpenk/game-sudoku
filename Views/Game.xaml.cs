@@ -123,7 +123,7 @@ namespace Game_Sudoku.Views
                         
                         SaveFile();
                         
-                        if (game.CheckMap())
+                        if (game.SudokuChecker.CheckMap())
                         {
                             string details = $"Difficulty: {DifficultyName}";
                             details += $"\r\nTime: {(TotalTime / 60)}:{(TotalTime % 60).ToString("00")}";
@@ -397,7 +397,7 @@ namespace Game_Sudoku.Views
             HintButton.Content = $"(Hint {hints})";
             
             game.Hint();
-            if (game.CheckMap())
+            if (game.SudokuChecker.CheckMap())
             {
                 string details = $"Difficulty: {DifficultyName}";
                 details += $"\r\nTime: {(TotalTime / 60)}:{(TotalTime % 60).ToString("00")}";
