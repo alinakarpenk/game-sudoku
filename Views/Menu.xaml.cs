@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Game_Sudoku.Views;
+using Game_Sudoku.Utilities;
 
-namespace Game_Sudoku
+namespace Game_Sudoku.Views
 {
     /// <summary>
     /// Логика взаимодействия для Sudoku.xaml
@@ -30,16 +18,16 @@ namespace Game_Sudoku
         {
             if (Game.CheckFile())
             {
-                NavigationService.Navigate(new NewOrLoadPage());
+                NavigationHelper.NavigateToPage(NavigationService, new NewOrLoadPage());
             }
             else
             {
-                NavigationService.Navigate(new DifficultyPage());
+                NavigationHelper.NavigateToPage(NavigationService, new DifficultyPage());
             }
         }
         private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Rules());
+            NavigationHelper.NavigateToPage(NavigationService, new Rules());
         }
         private void ExitButton_OnClick(object sender, RoutedEventArgs e)
         {

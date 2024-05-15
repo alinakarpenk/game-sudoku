@@ -1,6 +1,8 @@
+using Game_Sudoku.Utilities.Memento;
+
 namespace Game_Sudoku.Utilities
 {
-    public class SudokuMemento
+    public class SudokuMemento : IMemento
     {
         private readonly int[,] _state;
 

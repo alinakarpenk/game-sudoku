@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
+using Game_Sudoku.Utilities;
 
 namespace Game_Sudoku
 {
