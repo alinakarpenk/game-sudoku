@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Game_Sudoku.Utilities;
 
 namespace Game_Sudoku.Views
 {
@@ -12,14 +13,12 @@ namespace Game_Sudoku.Views
 
         private void NewGameButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (NavigationService != null) 
-                NavigationService.Navigate(new DifficultyPage());
+            NavigationHelper.NavigateToPage(NavigationService, new DifficultyPage());
         }
 
         private void ContinueButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (NavigationService != null) 
-                NavigationService.Navigate(new Game("", 1, 1, 1, true));
+            NavigationHelper.NavigateToPage(NavigationService, new Game("", 1, 1, 1, true));
         }
     }
 }

@@ -62,9 +62,10 @@
     <Compile Include="Factories\ISudokuFactory.cs" />
     <Compile Include="Factories\SudokuFactory.cs" />
     <Compile Include="Models\Sudoku.cs" />
+    <Compile Include="Utilities\Memento\IMemento.cs" />
+    <Compile Include="Utilities\Memento\SudokuMemento.cs" />
     <Compile Include="Utilities\NavigationHelper.cs" />
     <Compile Include="Utilities\SudokuCellDecorator.cs" />
-    <Compile Include="Utilities\SudokuMemento.cs" />
     <Compile Include="Views\DifficultyPage.xaml.cs">
       <DependentUpon>DifficultyPage.xaml</DependentUpon>
     </Compile>

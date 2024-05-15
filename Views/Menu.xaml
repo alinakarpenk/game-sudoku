@@ -15,7 +15,7 @@
     <Grid ShowGridLines="True">
         <Grid.Background>
             <ImageBrush
-                ImageSource="/imgsudoku.png"
+                ImageSource="/Resources/imgsudoku.png"
                 Stretch="UniformToFill"
                 TileMode="FlipX" />
         </Grid.Background>

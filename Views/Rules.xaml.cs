@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Game_Sudoku.Utilities;
 
 namespace Game_Sudoku.Views
 {
@@ -15,8 +16,7 @@ namespace Game_Sudoku.Views
 
         private void back_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService != null) 
-                NavigationService.Navigate(new Menu());
+            NavigationHelper.NavigateToPage(NavigationService, new Menu());
         }
     }
 }

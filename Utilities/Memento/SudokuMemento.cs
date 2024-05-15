@@ -1,6 +1,4 @@
-using Game_Sudoku.Utilities.Memento;
-
-namespace Game_Sudoku.Utilities
+namespace Game_Sudoku.Utilities.Memento
 {
     public class SudokuMemento : IMemento
     {
