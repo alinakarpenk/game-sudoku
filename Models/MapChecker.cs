@@ -1,12 +1,12 @@
 namespace Game_Sudoku.Models
 {
-    public class SudokuChecker
+    public class MapChecker
     {
         private const int Size = 9;
         private const int BlockSize = 3;
         private readonly int[,] _map;
 
-        public SudokuChecker(int[,] map)
+        public MapChecker(int[,] map)
         {
             _map = map;
         }

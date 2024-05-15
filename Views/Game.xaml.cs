@@ -110,7 +110,7 @@ namespace Game_Sudoku.Views
 
                         if (textBox.Text != "")
                         {
-                            game._map[x, y] = int.Parse(textBox.Text);
+                            game.Map[x, y] = int.Parse(textBox.Text);
                             turns += 1;
                             LabelTRN.Content = $"Turn: {turns}";
                             if (turnLimit > 0) 
@@ -119,11 +119,11 @@ namespace Game_Sudoku.Views
                             
                         }
                         else
-                            game._map[x, y] = 0;
+                            game.Map[x, y] = 0;
                         
                         SaveFile();
                         
-                        if (game.SudokuChecker.CheckMap())
+                        if (game.MapChecker.CheckMap())
                         {
                             string details = $"Difficulty: {DifficultyName}";
                             details += $"\r\nTime: {(TotalTime / 60)}:{(TotalTime % 60).ToString("00")}";
@@ -257,7 +257,7 @@ namespace Game_Sudoku.Views
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        game._map[i, j] = int.Parse(data[7 + i * 9 + j]);
+                        game.Map[i, j] = int.Parse(data[7 + i * 9 + j]);
                     }
                 }
 
@@ -265,7 +265,7 @@ namespace Game_Sudoku.Views
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        game._preparedMap[i, j] = int.Parse(data[88 + i * 9 + j]);
+                        game.Map[i, j] = int.Parse(data[88 + i * 9 + j]);
                     }
                 }
 
@@ -273,11 +273,11 @@ namespace Game_Sudoku.Views
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        game._generatedMap[i, j] = int.Parse(data[169 + i * 9 + j]);
+                        game.Map[i, j] = int.Parse(data[169 + i * 9 + j]);
                     }
                 }
                 
-                game.UpdateNumbers();
+                game.MapUpdater.UpdateNumbers();
             }
             catch (Exception)
             {
@@ -305,9 +305,9 @@ namespace Game_Sudoku.Views
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        mapString += $"{game._map[i, j]} ";
-                        preparedMapString += $"{game._preparedMap[i, j]} ";
-                        generatetMapString += $"{game._generatedMap[i, j]} ";
+                        mapString += $"{game.Map[i, j]} ";
+                        preparedMapString += $"{game.PreparedMap[i, j]} ";
+                        generatetMapString += $"{game.GeneratedMap[i, j]} ";
                     }
                 }
 
@@ -360,7 +360,7 @@ namespace Game_Sudoku.Views
         private void ClearYesButton_OnClick(object sender, RoutedEventArgs e)
         {
             ClearMenu.Visibility = Visibility.Collapsed;
-            game.ClearMap();
+            game.MapUpdater.ClearMap();
             PauseTime += ((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - PauseStartTime) / 1000;
         }
         
@@ -396,8 +396,8 @@ namespace Game_Sudoku.Views
 
             HintButton.Content = $"(Hint {hints})";
             
-            game.Hint();
-            if (game.SudokuChecker.CheckMap())
+            game.GameLogic.Hint();
+            if (game.MapChecker.CheckMap())
             {
                 string details = $"Difficulty: {DifficultyName}";
                 details += $"\r\nTime: {(TotalTime / 60)}:{(TotalTime % 60).ToString("00")}";

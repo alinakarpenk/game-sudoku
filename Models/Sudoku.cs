@@ -1,197 +1,47 @@
 using System;
-using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace Game_Sudoku.Models
 {
     public class Sudoku
     {
-        public readonly TextBox[,] TextBoxes;
-        public int[,] _map;
-        public readonly int[,] _preparedMap;
-        public readonly int[,] _generatedMap;
-        public readonly int _hiddenCount;
-        public readonly Random _random;
+        private readonly TextBox[,] _textBoxes;
+        private readonly int _hiddenCount;
+        private readonly Random _random;
 
-        public SudokuChecker SudokuChecker { get; set; }
+        public int[,] Map { get; private set; }
+        public int[,] PreparedMap { get; private set; }
+        public int[,] GeneratedMap { get; private set; }
+        public MapGenerator MapGenerator { get; private set; }
+        public MapPreparer MapPreparer { get; private set; }
+        public MapUpdater MapUpdater { get; private set; }
+        public MapChecker MapChecker { get; private set; }
+        public GameLogic GameLogic { get; private set; }
 
         public Sudoku(TextBox[,] textBoxes, int hiddenCount = 45)
         {
-            TextBoxes = textBoxes;
+            _textBoxes = textBoxes;
             _hiddenCount = hiddenCount;
             _random = new Random(Guid.NewGuid().GetHashCode());
 
-            _map = new int[9, 9];
-            _preparedMap = new int[9, 9];
-            _generatedMap = new int[9, 9];
+            InitializeComponents();
+        }
 
-            GenerateMap();
+        private void InitializeComponents()
+        {
+            Map = new int[9, 9];
+            PreparedMap = new int[9, 9];
+            GeneratedMap = new int[9, 9];
             
-            SudokuChecker = new SudokuChecker(_map);
-        }
+            MapGenerator = new MapGenerator();
+            MapPreparer = new MapPreparer(GeneratedMap, PreparedMap, Map, _hiddenCount, _random);
+            MapUpdater = new MapUpdater(Map, GeneratedMap, new SudokuUi(_textBoxes));
+            MapChecker = new MapChecker(Map);
+            GameLogic = new GameLogic(GeneratedMap, Map, _textBoxes);
 
-        
-        public void GenerateMap()
-        {
-            int[] firstRow = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            int a, b, c, swaps = _random.Next(3, 10), j = 0, shift;
-            for (int i = 0; i < swaps; i += 1)
-            {
-                a = _random.Next(0, 9); b = _random.Next(0, 9);
-                (firstRow[a], firstRow[b]) = (firstRow[b], firstRow[a]);
-            }
-
-            for (int i = 0; i < 9; i += 1)
-            {
-                _map[j, i] = firstRow[i];
-            }
-
-            for (j = 1; j < 9; j += 1)
-            {
-                if (j % 3 == 0) shift = 1; else shift = 3;
-                for (int i = 0; i < 9; i += 1)
-                {
-                    _map[j, i] = _map[j - 1, (i + shift) % 9];
-                }
-            }
-
-            swaps = _random.Next(0, 3);
-            for (int i = 0; i < swaps; i += 1)
-            {
-                c = _random.Next(0, 9);
-
-                a = _random.Next(3 * (c / 3), 3 * (c / 3 + 1)); b = _random.Next(3 * (c / 3), 3 * (c / 3 + 1));
-                RowSwap(a, b);
-            }
-
-            swaps = _random.Next(0, 3);
-            for (int i = 0; i < swaps; i += 1)
-            {
-                c = _random.Next(0, 9);
-
-                a = _random.Next(3 * (c / 3), 3 * (c / 3 + 1)); b = _random.Next(3 * (c / 3), 3 * (c / 3 + 1));
-                ColumnSwap(a, b);
-            }
-
-            PrepareMap();
-            UpdateNumbers();
-        }
-
-        private void SwapElements(int[,] array, int a, int b, int size, string type)
-        {
-            for (int i = 0; i < size; i++)
-            {
-                if (type == "Row")
-                    (array[a, i], array[b, i]) = (array[b, i], array[a, i]);
-                else if (type == "Column")
-                    (array[i, a], array[i, b]) = (array[i, b], array[i, a]);
-            }
-        }
-
-        public void RowSwap(int a, int b)
-        {
-            SwapElements(_map, a, b, 9, "Row");
-        }
-
-        public void ColumnSwap(int a, int b)
-        {
-            SwapElements(_map, a, b, 9, "Column");
-        }
-        
-        public void UpdateNumbers()
-        {
-            for (int i = 0; i < 9; i++)
-            {
-                for (int j = 0; j < 9; j++)
-                {
-                    if (_map[i, j] == 0)
-                        TextBoxes[i, j].Text = "";
-                    else
-                        TextBoxes[i, j].Text = _map[i, j].ToString();
-
-                    if (_preparedMap[i, j] != 0)
-                    {
-                        TextBoxes[i, j].IsReadOnly = true;
-                        TextBoxes[i, j].FontWeight = FontWeights.Bold;
-                    }
-                    else
-                    {
-                        TextBoxes[i, j].IsReadOnly = false;
-                        TextBoxes[i, j].FontWeight = FontWeights.Regular;
-                    }
-                }
-            }
-        }
-
-        //Приховування чисел
-        public void PrepareMap()
-        {
-            List<Point> shown = new List<Point>();
-
-            for (int i = 0; i < 9; i += 1)
-            {
-                for (int j = 0; j < 9; j += 1)
-                {
-                    _generatedMap[i, j] = _map[i, j];
-                    _preparedMap[i, j] = 0;
-                    shown.Add(new Point(i, j));
-                }
-            }
-
-            for (int i = 0; i < _hiddenCount; i += 1)
-            {
-                shown.RemoveAt(_random.Next(0, shown.Count));
-            }
-
-            foreach (Point p in shown)
-            {
-                _preparedMap[(int)p.X, (int)p.Y] = _generatedMap[(int)p.X, (int)p.Y];
-            }
-
-            for (int i = 0; i < 9; i += 1)
-            {
-                for (int j = 0; j < 9; j += 1)
-                {
-                    _map[i, j] = _preparedMap[i, j];
-                }
-            }
-        }
-        public void ClearMap()
-        {
-            for (int i = 0; i < 9; i += 1)
-            {
-                for (int j = 0; j < 9; j += 1)
-                {
-                    _map[i, j] = _preparedMap[i, j];
-                }
-            }
-            UpdateNumbers();
-        }
-
-        public void Hint()
-        {
-            List<Point> hidden = new List<Point>();
-            for (int i = 0; i < 9; i += 1)
-            {
-                for (int j = 0; j < 9; j += 1)
-                {
-                    if (_generatedMap[j, i] != _map[j, i])
-                        hidden.Add(new Point(j, i));
-                }
-            }
-
-            Point gift = hidden[_random.Next(0, hidden.Count)];
-
-            int x = (int)gift.X, y = (int)gift.Y;
-
-            _map[x, y] = _generatedMap[x, y];
-            TextBoxes[x, y].Text = _map[x, y].ToString();
+            MapGenerator.GenerateMap();
+            MapPreparer.PrepareMap();
+            MapUpdater.UpdateNumbers();
         }
     }
 }
-
-
-
-
-
