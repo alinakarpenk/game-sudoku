@@ -1,12 +1,12 @@
 ﻿<Page
     Background="#FF99D2DC"
     MinHeight="400"
-    MinWidth="450"
-    Title="New Or Continue"
+    MinWidth="700"
+    Title="Difficulty"
     d:DesignHeight="500"
     d:DesignWidth="800"
     mc:Ignorable="d"
-    x:Class="Game_Sudoku.NewOrLoadPage"
+    x:Class="Game_Sudoku.Views.DifficultyPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Game_Sudoku"
@@ -30,31 +30,61 @@
             HorizontalAlignment="Center"
             Margin="30"
             VerticalAlignment="Center">
+            <Label
+                Content="Choose Difficulty"
+                FontFamily="Consolas"
+                FontSize="50"
+                Foreground="#FFF9F0F0"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,25" />
             <Button
                 Background="#FF51A18D"
                 BorderBrush="#FF3D9B98"
-                Click="NewGameButton_OnClick"
-                Content="New Game"
+                Click="BeginnerButton_OnClick"
+                Content="Beginner (50 numbers, 5 Hints, Unlimited)"
                 FontFamily="Consolas"
                 FontSize="27"
                 Foreground="#FFF9F0F0"
                 Height="50"
                 Margin="0,0,0,5"
                 Padding="10,0"
-                Width="250"
-                x:Name="NewGameButton" />
+                x:Name="BeginnerButton" />
             <Button
                 Background="#FF51A18D"
                 BorderBrush="#FF3D9B98"
-                Click="ContinueButton_OnClick"
-                Content="Continue"
+                Click="ComfortButton_OnClick"
+                Content="Comfort (45 numbers, 3 Hints, Unlimited)"
                 FontFamily="Consolas"
                 FontSize="27"
                 Foreground="#FFF9F0F0"
                 Height="50"
                 Margin="0,0,0,5"
                 Padding="10,0"
-                x:Name="ContinueButton" />
+                x:Name="ComfortButton" />
+            <Button
+                Background="#FF51A18D"
+                BorderBrush="#FF3D9B98"
+                Click="NormalButton_OnClick"
+                Content="Normal (40 numbers, 3 Hints, 80 turns)"
+                FontFamily="Consolas"
+                FontSize="27"
+                Foreground="#FFF9F0F0"
+                Height="50"
+                Margin="0,0,0,5"
+                Padding="10,0"
+                x:Name="NormalButton" />
+            <Button
+                Background="#FF51A18D"
+                BorderBrush="#FF3D9B98"
+                Click="HardButton_OnClick"
+                Content="Hard (25 numbers, 1 Hint, 60 turns)"
+                FontFamily="Consolas"
+                FontSize="27"
+                Foreground="#FFF9F0F0"
+                Height="50"
+                Margin="0,0,0,5"
+                Padding="10,0"
+                x:Name="HardButton" />
         </StackPanel>
     </Grid>
 </Page>

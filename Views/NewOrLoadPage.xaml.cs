@@ -1,7 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Game_Sudoku.Utilities;
 
-namespace Game_Sudoku
+namespace Game_Sudoku.Views
 {
     public partial class NewOrLoadPage : Page
     {
@@ -12,12 +13,12 @@ namespace Game_Sudoku
 
         private void NewGameButton_OnClick(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new DifficultyPage());
+            NavigationHelper.NavigateToPage(NavigationService, new DifficultyPage());
         }
 
         private void ContinueButton_OnClick(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Game("", 1, 1, 1, true));
+            NavigationHelper.NavigateToPage(NavigationService, new Game("", 1, 1, 1, true));
         }
     }
 }

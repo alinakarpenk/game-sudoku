@@ -59,23 +59,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DifficultyPage.xaml.cs">
+    <Compile Include="Factories\ISudokuFactory.cs" />
+    <Compile Include="Factories\SudokuFactory.cs" />
+    <Compile Include="Models\GameLogic.cs" />
+    <Compile Include="Models\ISudokuUi.cs" />
+    <Compile Include="Models\MapGenerator.cs" />
+    <Compile Include="Models\MapPreparer.cs" />
+    <Compile Include="Models\MapUpdater.cs" />
+    <Compile Include="Models\Sudoku.cs" />
+    <Compile Include="Models\MapChecker.cs" />
+    <Compile Include="Models\SudokuUI.cs" />
+    <Compile Include="Utilities\Memento\IMemento.cs" />
+    <Compile Include="Utilities\Memento\SudokuMemento.cs" />
+    <Compile Include="Utilities\NavigationHelper.cs" />
+    <Compile Include="Utilities\SudokuCellDecorator.cs" />
+    <Compile Include="Views\DifficultyPage.xaml.cs">
       <DependentUpon>DifficultyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewOrLoadPage.xaml.cs">
-      <DependentUpon>NewOrLoadPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Rules.xaml.cs">
-      <DependentUpon>Rules.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Game.xaml.cs">
+    <Compile Include="Views\Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menu.xaml.cs">
+    <Compile Include="Views\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sudoku.cs" />
-    <Page Include="DifficultyPage.xaml" />
+    <Compile Include="Views\NewOrLoadPage.xaml.cs">
+      <DependentUpon>NewOrLoadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rules.xaml.cs">
+      <DependentUpon>Rules.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -88,16 +100,17 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NewOrLoadPage.xaml" />
-    <Page Include="Rules.xaml">
+    <Page Include="Views\DifficultyPage.xaml" />
+    <Page Include="Views\Game.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Game.xaml">
+    <Page Include="Views\Menu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menu.xaml">
+    <Page Include="Views\NewOrLoadPage.xaml" />
+    <Page Include="Views\Rules.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,13 +142,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="sudoku.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="imgsudoku.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon.ico" />
+    <Resource Include="Resources\icon.ico" />
+    <Resource Include="Resources\imgsudoku.png" />
+    <Resource Include="Resources\sudoku.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
